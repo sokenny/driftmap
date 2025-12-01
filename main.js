@@ -92,29 +92,14 @@ function init() {
 // =========================================
 
 function initGlobe() {
+  // Clean globe without pins - Buenos Aires will be highlighted naturally through the zoom animation
   globe = Globe()
     .globeImageUrl("//unpkg.com/three-globe/example/img/earth-night.jpg")
     .bumpImageUrl("//unpkg.com/three-globe/example/img/earth-topology.png")
     .backgroundImageUrl("//unpkg.com/three-globe/example/img/night-sky.png")
     .showAtmosphere(true)
     .atmosphereColor("#8b5cf6")
-    .atmosphereAltitude(0.25)
-    // Points (pins)
-    .pointsData(LOCATIONS)
-    .pointLat("lat")
-    .pointLng("lng")
-    .pointColor(() => CONFIG.pinColor)
-    .pointAltitude(0.1)
-    .pointRadius(0.8)
-    .pointResolution(32)
-    // Rings (pulsing effect)
-    .ringsData(LOCATIONS)
-    .ringLat("lat")
-    .ringLng("lng")
-    .ringColor(() => (t) => `rgba(0, 255, 136, ${1 - t})`)
-    .ringMaxRadius(3)
-    .ringPropagationSpeed(3)
-    .ringRepeatPeriod(1500)(globeContainer);
+    .atmosphereAltitude(0.25)(globeContainer);
 
   // Initial position - zoomed out view
   globe.pointOfView(
