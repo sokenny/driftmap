@@ -11,9 +11,9 @@
 
 const CONFIG = {
   // Parque Saavedra, Saavedra, CABA (initial map center)
-  centerLat: -34.5500,
-  centerLng: -58.4800,
-  
+  centerLat: -34.55,
+  centerLng: -58.48,
+
   // Buenos Aires center (for globe zoom)
   buenosAiresLat: -34.6118,
   buenosAiresLng: -58.4173,
@@ -24,7 +24,7 @@ const CONFIG = {
     zoomAltitude: 0.8,
     zoomDuration: 2500,
     introDelay: 1000, // Zoom starts 1 second after mounting
-    transitionDelay: 5000, // When to switch to 2D map
+    transitionDelay: 2750, // When to switch to 2D map (introDelay + zoomDuration + 500ms buffer)
   },
 
   // Map settings
