@@ -10,16 +10,20 @@
 // =========================================
 
 const CONFIG = {
-  // Buenos Aires center
-  centerLat: -34.6118,
-  centerLng: -58.4173,
+  // Parque Saavedra, Saavedra, CABA (initial map center)
+  centerLat: -34.5500,
+  centerLng: -58.4800,
+  
+  // Buenos Aires center (for globe zoom)
+  buenosAiresLat: -34.6118,
+  buenosAiresLng: -58.4173,
 
   // Globe settings
   globe: {
     startAltitude: 3.5,
     zoomAltitude: 0.8,
     zoomDuration: 2500,
-    introDelay: 2000,
+    introDelay: 1000, // Zoom starts 1 second after mounting
     transitionDelay: 5000, // When to switch to 2D map
   },
 
@@ -211,8 +215,8 @@ function startIntroSequence() {
 
     globe.pointOfView(
       {
-        lat: CONFIG.centerLat,
-        lng: CONFIG.centerLng,
+        lat: CONFIG.buenosAiresLat,
+        lng: CONFIG.buenosAiresLng,
         altitude: CONFIG.globe.zoomAltitude,
       },
       CONFIG.globe.zoomDuration

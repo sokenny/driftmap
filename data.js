@@ -20,7 +20,7 @@ const LOCATIONS = [
     lng: -58.74275,
     description:
       "A hidden underground space in Buenos Aires. Explore the depths beneath the city streets.",
-    images: ["imgs/locations/rotondita.jpg", "imgs/locations/rotondita.jpg"],
+    images: ["/imgs/locations/rotondita.jpeg", "/imgs/locations/rotondita.jpeg"],
     tags: ["underground", "urban"],
   },
   {
@@ -30,7 +30,10 @@ const LOCATIONS = [
     lng: -58.5076549,
     description:
       "Another underground discovery in the urban maze of Buenos Aires. Where the city's secrets lie hidden.",
-    images: ["imgs/locations/tecnopolis.jpg", "imgs/locations/tecnopolis.jpg"],
+    images: [
+      "/imgs/locations/tecnopolis.jpeg",
+      "/imgs/locations/tecnopolis.jpeg",
+    ],
     tags: ["underground", "urban"],
   },
   {
@@ -41,8 +44,8 @@ const LOCATIONS = [
     description:
       "A third underground location waiting to be explored. The city's hidden network continues to reveal itself.",
     images: [
-      "imgs/locations/rotonda-grande.jpg",
-      "imgs/locations/rotonda-grande.jpg",
+      "/imgs/locations/rotonda-grande.jpeg",
+      "/imgs/locations/rotonda-grande.jpeg",
     ],
     tags: ["underground", "urban"],
   },
