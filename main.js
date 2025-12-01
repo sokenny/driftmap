@@ -67,6 +67,7 @@ const detailCoords = document.getElementById("detail-coords");
 const detailDesc = document.getElementById("detail-desc");
 const detailGallery = document.getElementById("detail-gallery");
 const detailClose = document.getElementById("detail-close");
+const detailMapLink = document.getElementById("detail-map-link");
 const cameraLat = document.getElementById("camera-lat");
 const cameraLng = document.getElementById("camera-lng");
 
@@ -313,6 +314,9 @@ function showDetailPanel(location) {
     4
   )}° // LNG ${location.lng.toFixed(4)}°`;
   detailDesc.textContent = location.description;
+
+  // Set Google Maps link
+  detailMapLink.href = `https://www.google.com/maps?q=${location.lat},${location.lng}`;
 
   // Build gallery
   detailGallery.innerHTML = "";
