@@ -78,6 +78,45 @@ const LOCATIONS = [
     ],
     tags: ["architecture", "esoteric", "landmark"],
   },
+  {
+    id: 6,
+    name: "Underground Location #1",
+    lat: -34.4493333,
+    lng: -58.74275,
+    description:
+      "A hidden underground space in Buenos Aires. Explore the depths beneath the city streets.",
+    images: [
+      "https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=600&q=80",
+      "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=600&q=80",
+    ],
+    tags: ["underground", "urban"],
+  },
+  {
+    id: 7,
+    name: "Underground Location #2",
+    lat: -34.5615668,
+    lng: -58.5076549,
+    description:
+      "Another underground discovery in the urban maze of Buenos Aires. Where the city's secrets lie hidden.",
+    images: [
+      "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80",
+      "https://images.unsplash.com/photo-1517817748493-49ec54a32465?w=600&q=80",
+    ],
+    tags: ["underground", "urban"],
+  },
+  {
+    id: 8,
+    name: "Underground Location #3",
+    lat: -34.5333179,
+    lng: -58.4649936,
+    description:
+      "A third underground location waiting to be explored. The city's hidden network continues to reveal itself.",
+    images: [
+      "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=600&q=80",
+      "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=600&q=80",
+    ],
+    tags: ["underground", "urban"],
+  },
 ];
 
 // Export for ES modules (if needed later)
