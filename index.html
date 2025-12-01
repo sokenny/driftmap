@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRIFTMAP // UNDERGROUND</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="noise-overlay"></div>
+  
+  <header class="header">
+    <div class="header-content">
+      <h1 class="title">
+        <span class="title-drift">DRIFT</span><span class="title-map">MAP</span>
+      </h1>
+      <p class="subtitle">// UNDERGROUND NETWORK</p>
+    </div>
+    <div class="header-line"></div>
+  </header>
+
+  <main class="main">
+    <div id="globe-container"></div>
+    <div id="map-container"></div>
+    
+    <!-- Location Preview Panel (hover) -->
+    <div id="preview-panel" class="preview-panel hidden">
+      <div class="preview-image-container">
+        <img id="preview-image" src="" alt="Location preview">
+        <div class="preview-image-overlay"></div>
+      </div>
+      <div class="preview-content">
+        <h3 id="preview-title" class="preview-title"></h3>
+        <p id="preview-coords" class="preview-coords"></p>
+      </div>
+      <div class="preview-hint">[ CLICK TO EXPAND ]</div>
+    </div>
+
+    <!-- Location Detail Panel (click) -->
+    <div id="detail-panel" class="detail-panel hidden">
+      <button id="detail-close" class="detail-close">✕</button>
+      <div class="detail-header">
+        <h2 id="detail-title" class="detail-title"></h2>
+        <p id="detail-coords" class="detail-coords"></p>
+      </div>
+      <div class="detail-gallery" id="detail-gallery"></div>
+      <div class="detail-description">
+        <p id="detail-desc"></p>
+      </div>
+      <div class="detail-footer">
+        <span class="detail-tag">#UNDERGROUND</span>
+        <span class="detail-tag">#URBAN</span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span class="footer-text">NAVIGATE THE DEPTHS</span>
+    <div class="footer-coords">
+      <span id="camera-lat">LAT: --</span>
+      <span id="camera-lng">LNG: --</span>
+    </div>
+  </footer>
+
+  <!-- Globe.gl - high-level 3D globe library -->
+  <script src="https://unpkg.com/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
+  <!-- Leaflet - 2D map library -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
+

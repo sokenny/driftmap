@@ -1,0 +1,12 @@
+{
+  "name": "driftmap",
+  "version": "1.0.0",
+  "description": "DRIFTMAP // UNDERGROUND - 3D Globe with Urban Underground Locations",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve . -p 3000"
+  },
+  "keywords": ["globe", "3d", "threejs", "maps", "underground"],
+  "license": "MIT"
+}
+
