@@ -40,7 +40,70 @@ const CONFIG = {
 
   // Pin styling
   pinColor: "#00ff88",
+
+  // Street View API (optional - leave empty for basic usage)
+  streetViewApiKey: "",
 };
+
+// =========================================
+// HELPER FUNCTIONS
+// =========================================
+
+/**
+ * Generate Google Street View thumbnail URL from coordinates
+ * @param {number} lat - Latitude
+ * @param {number} lng - Longitude
+ * @param {number} width - Image width (default: 400)
+ * @param {number} height - Image height (default: 300)
+ * @param {number} fov - Field of view (default: 90)
+ * @param {number} heading - Camera heading in degrees (default: 0)
+ * @param {number} pitch - Camera pitch in degrees (default: 0)
+ * @returns {string} Street View image URL
+ */
+function getStreetViewUrl(lat, lng, width = 400, height = 300, fov = 90, heading = 0, pitch = 0) {
+  const baseUrl = "https://maps.googleapis.com/maps/api/streetview";
+  const params = new URLSearchParams({
+    size: `${width}x${height}`,
+    location: `${lat},${lng}`,
+    fov: fov.toString(),
+    heading: heading.toString(),
+    pitch: pitch.toString(),
+  });
+
+  // Add API key if provided
+  if (CONFIG.streetViewApiKey) {
+    params.append("key", CONFIG.streetViewApiKey);
+  }
+
+  return `${baseUrl}?${params.toString()}`;
+}
+
+/**
+ * Get images for a location (uses Street View if no images provided)
+ * @param {Object} location - Location object
+ * @returns {Array} Array of image URLs
+ */
+function getLocationImages(location) {
+  // If location has images array with local paths, use those
+  if (location.images && location.images.length > 0) {
+    const firstImage = location.images[0];
+    // Check if it's a local path (starts with /) or a data URL
+    if (typeof firstImage === "string" && (firstImage.startsWith("/") || firstImage.startsWith("data:"))) {
+      return location.images;
+    }
+  }
+  
+  // Otherwise, generate Street View thumbnails
+  // Generate multiple angles for gallery view
+  const images = [
+    getStreetViewUrl(location.lat, location.lng, 800, 600, 90, 0, 0),      // Front
+    getStreetViewUrl(location.lat, location.lng, 800, 600, 90, 90, 0),     // Right
+    getStreetViewUrl(location.lat, location.lng, 800, 600, 90, 180, 0),   // Back
+    getStreetViewUrl(location.lat, location.lng, 800, 600, 90, 270, 0),   // Left
+  ];
+  
+  return images;
+}
 
 // =========================================
 // STATE
@@ -62,6 +125,7 @@ const detailPanel = document.getElementById("detail-panel");
 const previewTitle = document.getElementById("preview-title");
 const previewCoords = document.getElementById("preview-coords");
 const previewImage = document.getElementById("preview-image");
+const previewMapLink = document.getElementById("preview-map-link");
 const detailTitle = document.getElementById("detail-title");
 const detailCoords = document.getElementById("detail-coords");
 const detailDesc = document.getElementById("detail-desc");
@@ -291,7 +355,13 @@ function showPreviewPanel(location) {
   previewCoords.textContent = `${location.lat.toFixed(
     4
   )}° / ${location.lng.toFixed(4)}°`;
-  previewImage.src = location.images[0];
+  
+  // Use Street View thumbnail if available
+  const images = getLocationImages(location);
+  previewImage.src = images[0];
+
+  // Set Google Maps link
+  previewMapLink.href = `https://www.google.com/maps?q=${location.lat},${location.lng}`;
 
   previewPanel.classList.remove("hidden");
   previewPanel.classList.add("visible");
@@ -318,13 +388,18 @@ function showDetailPanel(location) {
   // Set Google Maps link
   detailMapLink.href = `https://www.google.com/maps?q=${location.lat},${location.lng}`;
 
-  // Build gallery
+  // Build gallery using Street View images
   detailGallery.innerHTML = "";
-  location.images.forEach((imgUrl, index) => {
+  const images = getLocationImages(location);
+  images.forEach((imgUrl, index) => {
     const img = document.createElement("img");
     img.src = imgUrl;
-    img.alt = `${location.name} - Image ${index + 1}`;
+    img.alt = `${location.name} - Street View ${index + 1}`;
     img.loading = "lazy";
+    img.onerror = function() {
+      // Fallback to a placeholder if Street View is not available
+      this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%2312121a' width='400' height='300'/%3E%3Ctext fill='%236b7280' font-family='sans-serif' font-size='14' x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle'%3ENo Street View Available%3C/text%3E%3C/svg%3E";
+    };
     detailGallery.appendChild(img);
   });
 
