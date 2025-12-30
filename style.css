@@ -193,11 +193,23 @@ body {
 .custom-marker {
   background: transparent;
   border: none;
+  pointer-events: auto !important;
+}
+
+/* Prevent map dragging when interacting with markers on mobile */
+@media (max-width: 768px) {
+  .leaflet-container {
+    touch-action: pan-x pan-y;
+  }
+  
+  .custom-marker {
+    touch-action: none;
+  }
 }
 
 .marker-pin {
-  width: 20px;
-  height: 20px;
+  width: 100%;
+  height: 100%;
   background: var(--color-accent-primary);
   border-radius: 50%;
   box-shadow: 
@@ -207,6 +219,8 @@ body {
   animation: marker-pulse 2s infinite;
   cursor: pointer;
   position: relative;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .marker-pin::after {
@@ -215,10 +229,23 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
+  width: 40%;
+  height: 40%;
   background: white;
   border-radius: 50%;
+}
+
+/* Larger markers on mobile for better touch targets */
+@media (max-width: 768px) {
+  .marker-pin {
+    min-width: 36px;
+    min-height: 36px;
+  }
+  
+  /* Ensure markers are easily tappable */
+  .custom-marker {
+    z-index: 1000 !important;
+  }
 }
 
 @keyframes marker-pulse {

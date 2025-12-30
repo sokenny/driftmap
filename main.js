@@ -225,38 +225,65 @@ function initMap() {
 }
 
 function createCustomMarker(location) {
+  // Detect if mobile device - check both user agent and screen size
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || 
+                   window.innerWidth <= 768 ||
+                   ('ontouchstart' in window);
+  
+  // Larger markers on mobile for better touch targets
+  const markerSize = isMobile ? 36 : 20;
+  const iconSize = [markerSize, markerSize];
+  const iconAnchor = [markerSize / 2, markerSize / 2];
+
   // Custom HTML marker
   const markerIcon = L.divIcon({
     className: "custom-marker",
     html: `<div class="marker-pin" data-id="${location.id}"></div>`,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10],
+    iconSize: iconSize,
+    iconAnchor: iconAnchor,
   });
 
   const marker = L.marker([location.lat, location.lng], {
     icon: markerIcon,
+    interactive: true,
+    // Increase clickable area
+    riseOnHover: false,
   }).addTo(map);
 
-  // Hover events
-  marker.on("mouseover", () => {
-    if (currentView === "map") {
-      showPreviewPanel(location);
-    }
-  });
+  // Hover events (desktop only)
+  if (!isMobile) {
+    marker.on("mouseover", () => {
+      if (currentView === "map") {
+        showPreviewPanel(location);
+      }
+    });
 
-  marker.on("mouseout", () => {
-    if (currentView === "map" && !selectedLocation) {
-      hidePreviewPanel();
-    }
-  });
+    marker.on("mouseout", () => {
+      if (currentView === "map" && !selectedLocation) {
+        hidePreviewPanel();
+      }
+    });
+  }
 
-  // Click event
-  marker.on("click", () => {
+  // Click/touch event handler
+  const handleMarkerClick = (e) => {
     if (currentView === "map") {
+      // Prevent map panning when clicking marker
+      L.DomEvent.stopPropagation(e);
+      L.DomEvent.preventDefault(e);
+      
       showDetailPanel(location);
       map.flyTo([location.lat, location.lng], 16, { duration: 1 });
     }
-  });
+  };
+
+  // Use both click and touchend for maximum compatibility
+  marker.on("click", handleMarkerClick);
+  
+  // Additional touch event for mobile
+  if (isMobile) {
+    marker.on("touchend", handleMarkerClick);
+  }
 
   return marker;
 }
@@ -412,12 +439,7 @@ function hideDetailPanel() {
   detailPanel.classList.remove("visible");
   detailPanel.classList.add("hidden");
 
-  // Zoom back out on map
-  if (currentView === "map") {
-    map.flyTo([CONFIG.centerLat, CONFIG.centerLng], CONFIG.map.initialZoom, {
-      duration: 1,
-    });
-  }
+  // Don't zoom out - keep map at current position
 }
 
 // =========================================
